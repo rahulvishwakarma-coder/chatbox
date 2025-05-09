@@ -305,32 +305,32 @@
         <p>© 2025 Kirshi Seva. All rights reserved.</p>
     </footer>
     <script>
-        const crops = [
-            {
-                name: "Wheat",
-                quantity: 20,
-                price: 2200,
-                location: "Narsinghpur"
-            },
-            {
-                name: "Rice",
-                quantity: 15,
-                price: 2500,
-                location: "Gotegoan"
-            }
-        ];
+        // const crops = [
+        //     {
+        //         Name: "Wheat",
+        //         Quantity: 20,
+        //         Price: 2200,
+        //         Location: "Narsinghpur"
+        //     },
+        // ];
 
-        function displayCrops() {
+        fetch('http://localhost:3000/getcrops')
+        .then((response)=>{
+            return response.json();
+        }).then((crops)=>{
+            displayCrops(crops);
+        })
+        function displayCrops(crops) {
             const cropList = document.getElementById('cropList');
             cropList.innerHTML = '';
             crops.forEach(crop => {
                 const cropCard = document.createElement('div');
                 cropCard.className = 'crop-card';
                 cropCard.innerHTML = `
-                    <h3>${crop.name}</h3>
-                    <p>Quantity: ${crop.quantity} Quintals</p>
-                    <p>Price: ₹${crop.price} per Quintal</p>
-                    <p>Location: ${crop.location}</p>
+                    <h3>${crop.Name}</h3>
+                    <p>Quantity: ${crop.Quantity} Quintals</p>
+                    <p>Price: ₹${crop.Price} per Quintal</p>
+                    <p>Location: ${crop.Location}</p>
                     <button onclick="buyCrop('${crop.name}')">Buy</button>
                 `;
                 cropList.appendChild(cropCard);
@@ -339,31 +339,29 @@
 
         function addCrop() {
             const cropName = document.getElementById('cropName').value;
-            const quantity = document.getElementById('quantity').value;
-            const price = document.getElementById('price').value;
+            const quantity = Number(document.getElementById('quantity').value);
+            const price = Number(document.getElementById('price').value);
             const location = document.getElementById('location').value;
 
-            if (cropName && quantity && price && location) {
-                crops.push({
-                    name: cropName,
-                    quantity: parseInt(quantity),
-                    price: parseInt(price),
-                    location: location
-                });
-                displayCrops();
-                // Clear form
-                document.getElementById('cropName').value = '';
-                document.getElementById('quantity').value = '';
-                document.getElementById('price').value = '';
-                document.getElementById('location').value = '';
-                alert('Crop posted successfully!');
-            } else {
-                alert('Please fill all fields.');
+            const crop = {
+                Name:cropName,
+                Quantity:quantity,
+                Price:price,
+                Location:location
             }
-        }
 
-        function buyCrop(cropName) {
-            alert(`You have selected to buy ${cropName}. Please contact the seller for further details.`);
+        fetch('http://localhost:3000/crops', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(crop)
+        }).then((response)=>{
+            console.log(response);
+        }).catch((error)=>{
+            console.log(error);
+        })
+
         }
 
         // Initial display of crops
