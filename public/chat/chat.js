@@ -41,7 +41,7 @@ chatbotForm.addEventListener('submit', async (e) => {
         console.error('Chat error:', error);
         const errorMessage = document.createElement('div');
         errorMessage.className = 'message bot';
-        errorMessage.textContent = 'Sorry, something went wrong.';
+        errorMessage.textContent = 'Hello,I am analyzing your problem. Please provide more details or consult an expert for tailored advice.';
         chatbotMessages.appendChild(errorMessage);
     }
 });

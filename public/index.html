@@ -4,6 +4,7 @@
   <link rel="icon" href="logo.jpg" type="image/icon type">
   <meta charset="UTF-8">
   <title>Krishi Seva Portal</title>
+  <link rel="stylesheet" href="./chat/chat.css">
   <style>
     * {
       margin: 0;
@@ -52,22 +53,24 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      position: relative;
+      position: sticky;
       top: 0;
       z-index: 1000;
       animation: slideIn 0.8s ease-out;
+      border-radius: 50px;
+
     }
     @keyframes slideIn {
       from { transform: translateY(-100%); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
-    header h1 {
+    header h2 {
       font-size: 36px;
       font-weight: 700;
       letter-spacing: 1px;
       transition: transform 0.3s ease;
     }
-    header h1:hover {
+    header h2:hover {
       transform: scale(1.05);
     }
     .btns {
@@ -765,7 +768,7 @@
 </head>
 <body class="dark-mode">
   <header>
-    <a href="index.html" style="text-decoration: none; color: var(--text-color);"><h1 data-lang="title">कृषि सेवा पोर्टल</h1></a>
+    <a href="index.html" style="text-decoration: none; color: var(--text-color);"><h2 data-lang="title">कृषि सेवा पोर्टल</h2></a>
     <div class="btns">
       <div class="theme-toggle" onclick="toggleTheme()">
         <span class="icon sun">☀</span>
@@ -911,15 +914,17 @@ data-lang="whatsapp">Join WhatsApp Group</button>
   </div>
 
   <!-- Chat Popup -->
-  <div class="chat-popup" id="chatPopup">
-    <div class="chat-form">
-      <button class="close-btn" onclick="closeChatPopup()">×</button>
-      <h2 data-lang="chat-title">AI Farming Assistant</h2>
-      <textarea id="chatInput" data-lang-placeholder="chat-placeholder" placeholder="e.g., My crops are wilting, what should I do?"></textarea>
-      <button type="button" onclick="getChatResponse()" data-lang="chat-btn">Get Advice</button>
-      <div id="chatResponse"></div>
-    </div>
-  </div>
+    <section id="chatbot-section">
+      <button id="chatbot-toggle">Chat with KirshAi</button>
+      <div id="chatbot-container" style="display: none;">
+        <div id="chatbot-header">Kirshi Chatbot</div>
+        <div id="chatbot-messages"></div>
+        <form id="chatbot-form">
+          <input type="text" id="chatbot-input" placeholder="Ask about crops, diseases, etc." autocomplete="off">
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </section>
 
   <footer>
     <div class="footer-section">
@@ -951,8 +956,6 @@ data-lang="whatsapp">Join WhatsApp Group</button>
   </footer>
 
   <!-- Chat Support Sticker -->
-  <div class="chat-support" onclick="openChatPopup()">💬</div>
-
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const Name = document.querySelector('.Name');
     const Phone = document.querySelector('.Phone');
@@ -1016,7 +1019,7 @@ data-lang="whatsapp">Join WhatsApp Group</button>
         login: 'Login',
         help: 'Help & Support',
         slide1: 'Crop Buy/Sell Overview',
-        slide2: 'Upcoming Features',
+        slide2: 'Highlighted Features',
         slide3: 'About Us',
         slide4: 'Overview',
         services: 'Our Services',
@@ -1028,7 +1031,7 @@ data-lang="whatsapp">Join WhatsApp Group</button>
         feature6: 'Farm Sell',
         feature7: 'Expense Calculator',
         feature8: 'Fertilizer & Pesticides Buy',
-        feature9: 'Clay Test',
+        feature9: 'Crop Disease Detection',
         feature10: 'Old Vehicle Buy / Sell',
         'help-title': 'Help & Support',
         whatsapp: 'Join WhatsApp Group',
@@ -1261,6 +1264,7 @@ data-lang="whatsapp">Join WhatsApp Group</button>
     })();
 
   </script>
+  <script src="./chat/chat.js"></script>
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'932547f41f64e58e',t:'MTc0NDk5MTA0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9325e4c3fbb4bf86',t:'MTc0NDk5NzQ2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93264b8d9f66ed80',t:'MTc0NTAwMTY3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

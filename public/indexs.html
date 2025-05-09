@@ -4,7 +4,6 @@
   <link rel="icon" href="logo.jpg" type="image/icon type">
   <meta charset="UTF-8">
   <title>Krishi Seva Portal</title>
-  <link rel="stylesheet" href="./chat/chat.css">
   <style>
     * {
       margin: 0;
@@ -912,17 +911,15 @@ data-lang="whatsapp">Join WhatsApp Group</button>
   </div>
 
   <!-- Chat Popup -->
-    <section id="chatbot-section">
-      <button id="chatbot-toggle">Chat with Kirshi</button>
-      <div id="chatbot-container" style="display: none;">
-        <div id="chatbot-header">Kirshi Chatbot</div>
-        <div id="chatbot-messages"></div>
-        <form id="chatbot-form">
-          <input type="text" id="chatbot-input" placeholder="Ask about crops, diseases, etc." autocomplete="off">
-          <button type="submit">Send</button>
-        </form>
-      </div>
-    </section>
+  <div class="chat-popup" id="chatPopup">
+    <div class="chat-form">
+      <button class="close-btn" onclick="closeChatPopup()">×</button>
+      <h2 data-lang="chat-title">AI Farming Assistant</h2>
+      <textarea id="chatInput" data-lang-placeholder="chat-placeholder" placeholder="e.g., My crops are wilting, what should I do?"></textarea>
+      <button type="button" onclick="getChatResponse()" data-lang="chat-btn">Get Advice</button>
+      <div id="chatResponse"></div>
+    </div>
+  </div>
 
   <footer>
     <div class="footer-section">
@@ -954,6 +951,8 @@ data-lang="whatsapp">Join WhatsApp Group</button>
   </footer>
 
   <!-- Chat Support Sticker -->
+  <div class="chat-support" onclick="openChatPopup()">💬</div>
+
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const Name = document.querySelector('.Name');
     const Phone = document.querySelector('.Phone');
@@ -1262,7 +1261,6 @@ data-lang="whatsapp">Join WhatsApp Group</button>
     })();
 
   </script>
-  <script src="./chat/chat.js"></script>
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'932547f41f64e58e',t:'MTc0NDk5MTA0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9325e4c3fbb4bf86',t:'MTc0NDk5NzQ2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
   <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93264b8d9f66ed80',t:'MTc0NTAwMTY3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
