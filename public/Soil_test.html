@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirshi Seva - Clay Test</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        header {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        nav {
+            background-color: #1b5e20;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #a5d6a7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .clay-test-form {
+            background: linear-gradient(135deg, #ffffff, #f1f8e9);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin: 0 auto;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .clay-test-form h2 {
+            font-family: 'Roboto Slab', serif;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input[type="file"]:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(to right, #4caf50, #66bb6a);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: block;
+            margin: 1rem auto;
+            transition: transform 0.2s ease;
+            animation: pulse 2s infinite;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin: 2rem auto;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+            display: none;
+        }
+
+        .result-card h3 {
+            color: #2e7d32;
+            font-family: 'Roboto Slab', serif;
+            margin-bottom: 1rem;
+        }
+
+        .result-card p {
+            color: #444;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .clay-test-form, .result-card {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>कृषि सेवा पोर्टल - Clay Test</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#clay-test">Clay Test</a></li>
+            <li><a href="https://www.youtube.com/embed/0t39R7s-UUg?si=ZYExr1IRHKyB_5M0">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <section id="clay-test">
+            <h2 class="section-title">Soil Clay Test</h2>
+            <div class="clay-test-form">
+                <div class="form-group">
+                    <label for="soilImage">Upload Soil Image</label>
+                    <input type="file" id="soilImage" accept="image/*" required>
+                </div>
+                <button onclick="analyzeSoil()" class="bg-gradient-to-r from-[#4caf50] to-[#66bb6a] text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-transform animate__animated animate__pulse animate__infinite">Analyze Soil</button>
+            </div>
+            <div id="resultCard" class="result-card">
+                <h3>Soil Analysis Result</h3>
+                <p id="resultText"></p>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 Kirshi Seva. All rights reserved.</p>
+    </footer>
+    <script>
+        function analyzeSoil() {
+            const imageInput = document.getElementById('soilImage');
+            const file = imageInput.files[0];
+            const resultCard = document.getElementById('resultCard');
+            const resultText = document.getElementById('resultText');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const simulatedResult = Math.random() > 0.5 
+                        ? "The soil has moderate clay content. Suitable for crops like wheat and rice. Consider adding organic matter."
+                        : "The soil has high clay content. Best for crops like cotton. Improve drainage if needed.";
+                    resultText.textContent = simulatedResult;
+                    resultCard.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload a soil image.');
+            }
+        }
+    </script>
+</body>
+</html>

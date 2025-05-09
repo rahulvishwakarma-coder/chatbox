@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirshi Seva - Crop Calendar</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        header {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        nav {
+            background-color: #1b5e20;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #a5d6a7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        #calendar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .calendar-form {
+            background: linear-gradient(135deg, #ffffff, #f1f8e9);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin: 0 auto;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .calendar-form h2 {
+            font-family: 'Roboto Slab', serif;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        footer {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .calendar-form {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Custom FullCalendar Styling */
+        .fc-button {
+            background: linear-gradient(to right, #4caf50, #66bb6a) !important;
+            border: none !important;
+            border-radius: 8px !important;
+            transition: transform 0.2s ease !important;
+        }
+
+        .fc-button:hover {
+            transform: scale(1.05) !important;
+        }
+
+        .fc-button:active {
+            transform: scale(0.95) !important;
+        }
+
+        .fc-event {
+            background-color: #2e7d32 !important;
+            border-color: #1b5e20 !important;
+            color: white !important;
+            border-radius: 6px !important;
+            padding: 2px 4px !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>कृषि सेवा पोर्टल - Crop Calendar</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#calendar">Crop Calendar</a></li>
+            <li><a href="#add-event">Add Crop Event</a></li>
+            <li><a href="https://www.youtube.com/embed/0t39R7s-UUg?si=ZYExr1IRHKyB_5M0">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <section id="calendar">
+            <h2 class="section-title">Crop Schedule Calendar</h2>
+            <div id="calendar-container"></div>
+        </section>
+        <section id="add-event">
+            <div class="calendar-form">
+                <h2>Add Crop Event</h2>
+                <div class="form-group">
+                    <label for="cropName">Crop Name</label>
+                    <input type="text" id="cropName" placeholder="e.g., Wheat" required>
+                </div>
+                <div class="form-group">
+                    <label for="activity">Activity</label>
+                    <select id="activity" required>
+                        <option value="" disabled selected>Select Activity</option>
+                        <option value="Sowing">Sowing</option>
+                        <option value="Irrigation">Irrigation</option>
+                        <option value="Fertilization">Fertilization</option>
+                        <option value="Harvesting">Harvesting</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate">Event Date</label>
+                    <input type="date" id="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" placeholder="e.g., Narsinghpur" required>
+                </div>
+                <button class="hover:scale-105 transition-transform" onclick="addEvent()">Add Event</button>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 Kirshi Seva. All rights reserved.</p>
+    </footer>
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar-container');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: [
+                    {
+                        title: 'Wheat - Sowing',
+                        start: '2025-04-20',
+                        extendedProps: { location: 'Narsinghpur' }
+                    },
+                    {
+                        title: 'Rice - Irrigation',
+                        start: '2025-04-25',
+                        extendedProps: { location: 'Gotegoan' }
+                    }
+                ],
+                eventClick: function(info) {
+                    alert(`Event: ${info.event.title}\nLocation: ${info.event.extendedProps.location}\nDate: ${info.event.start.toISOString().split('T')[0]}`);
+                }
+            });
+            calendar.render();
+        });
+
+        function addEvent() {
+            const cropName = document.getElementById('cropName').value;
+            const activity = document.getElementById('activity').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const location = document.getElementById('location').value;
+
+            if (cropName && activity && eventDate && location) {
+                const calendarEl = document.getElementById('calendar-container');
+                const calendar = FullCalendar.getCalendar(calendarEl);
+                calendar.addEvent({
+                    title: `${cropName} - ${activity}`,
+                    start: eventDate,
+                    extendedProps: { location: location }
+                });
+                // Clear form
+                document.getElementById('cropName').value = '';
+                document.getElementById('activity').value = '';
+                document.getElementById('eventDate').value = '';
+                document.getElementById('location').value = '';
+                alert('Event added successfully!');
+            } else {
+                alert('Please fill all fields.');
+            }
+        }
+    </script>
+</body>
+</html>

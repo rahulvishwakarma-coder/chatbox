@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirshi Seva - Fertilizer & Pesticides Buy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        header {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        nav {
+            background-color: #1b5e20;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #a5d6a7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card h3 {
+            color: #2e7d32;
+            font-family: 'Roboto Slab', serif;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-card p {
+            margin-bottom: 0.5rem;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>कृषि सेवा पोर्टल - Fertilizer & Pesticides Buy</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#products">Fertilizers & Pesticides</a></li>
+            <li><a href="https://www.youtube.com/embed/0t39R7s-UUg?si=ZYExr1IRHKyB_5M0">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <section id="products">
+            <h2 class="section-title">Available Fertilizers & Pesticides</h2>
+            <div class="product-list" id="productList">
+                <!-- Product cards will be added here via JavaScript -->
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 Kirshi Seva. All rights reserved.</p>
+    </footer>
+    <script>
+        const products = [
+            {
+                name: "Urea Fertilizer",
+                price: 500,
+                description: "High-nitrogen fertilizer for crop growth."
+            },
+            {
+                name: "Insecticide Spray",
+                price: 300,
+                description: "Effective pest control solution."
+            }
+        ];
+
+        function displayProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <p>Price: ₹${product.price.toLocaleString()}</p>
+                    <p>${product.description}</p>
+                    <button onclick="buyProduct('${product.name}')" class="bg-gradient-to-r from-[#4caf50] to-[#66bb6a] text-white px-4 py-2 rounded-lg hover:scale-105 transition-transform">Buy</button>
+                `;
+                productList.appendChild(productCard);
+            });
+        }
+
+        function buyProduct(productName) {
+            alert(`You have selected to buy ${productName}. Please contact the seller for further details or proceed with payment.`);
+        }
+
+        // Initial display of products
+        displayProducts();
+    </script>
+</body>
+</html>

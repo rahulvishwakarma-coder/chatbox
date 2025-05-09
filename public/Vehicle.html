@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirshi Seva - Old Vehicle Buy/Sell</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        header {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        nav {
+            background-color: #1b5e20;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #a5d6a7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .vehicle-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .vehicle-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .vehicle-card:nth-child(1) { animation-delay: 0.1s; }
+        .vehicle-card:nth-child(2) { animation-delay: 0.2s; }
+        .vehicle-card:nth-child(3) { animation-delay: 0.3s; }
+        .vehicle-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .vehicle-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .vehicle-card h3 {
+            color: #2e7d32;
+            font-family: 'Roboto Slab', serif;
+            margin-bottom: 0.75rem;
+        }
+
+        .vehicle-card p {
+            margin-bottom: 0.5rem;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .vehicle-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .vehicle-form {
+            background: linear-gradient(135deg, #ffffff, #f1f8e9);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin: 0 auto;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .vehicle-form h2 {
+            font-family: 'Roboto Slab', serif;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(to right, #4caf50, #66bb6a);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: block;
+            margin: 1rem auto;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        footer {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .vehicle-list {
+                grid-template-columns: 1fr;
+            }
+
+            .vehicle-form {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>कृषि सेवा पोर्टल - Old Vehicle Buy/Sell</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#vehicles">Vehicles & Equipment</a></li>
+            <li><a href="#post-vehicle">Sell Vehicle</a></li>
+            <li><a href="https://www.youtube.com/embed/0t39R7s-UUg?si=ZYExr1IRHKyB_5M0">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <section id="vehicles">
+            <h2 class="section-title">Available Vehicles & Equipment</h2>
+            <div class="vehicle-list" id="vehicleList">
+                <!-- Vehicle cards will be added here via JavaScript -->
+            </div>
+        </section>
+        <section id="post-vehicle">
+            <div class="vehicle-form">
+                <h2>Post Your Vehicle/Equipment</h2>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle/Equipment Type</label>
+                    <select id="vehicleType" required>
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Tractor">Tractor</option>
+                        <option value="Harvester">Harvester</option>
+                        <option value="Tiller">Tiller</option>
+                        <option value="Truck">Truck</option>
+                        <option value="Plow">Plow</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <input type="text" id="brand" placeholder="e.g., Mahindra" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="number" id="year" placeholder="e.g., 2018" min="1900" max="2025" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (INR)</label>
+                    <input type="number" id="price" placeholder="e.g., 500000" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" placeholder="e.g., Narsinghpur" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleImage">Upload Image</label>
+                    <input type="file" id="vehicleImage" accept="image/*" required>
+                </div>
+                <button onclick="addVehicle()" class="bg-gradient-to-r from-[#4caf50] to-[#66bb6a] text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-transform animate__animated animate__pulse animate__infinite">Post Vehicle</button>
+            </div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 Kirshi Seva. All rights reserved.</p>
+    </footer>
+    <script>
+        const vehicles = [
+            {
+                type: "Tractor",
+                brand: "Mahindra",
+                year: 2019,
+                price: 450000,
+                location: "Narsinghpur",
+                image: "https://dygtyjqp7pi0m.cloudfront.net/i/7443/9197684_1.jpg?v=8CC87BD44FFA290"
+            },
+            {
+                type: "Harvester",
+                brand: "John Deere",
+                year: 2020,
+                price: 800000,
+                location: "Gotegoan",
+                image: "https://assets.tractorjunction.com/tractor-junction/assets/images/items/Sell-harvester-product-1652095305.jpg"
+            }
+        ];
+
+        function displayVehicles() {
+            const vehicleList = document.getElementById('vehicleList');
+            vehicleList.innerHTML = '';
+            vehicles.forEach(vehicle => {
+                const vehicleCard = document.createElement('div');
+                vehicleCard.className = 'vehicle-card';
+                vehicleCard.innerHTML = `
+                    <img src="${vehicle.image}" alt="${vehicle.type} Image">
+                    <h3>${vehicle.type} - ${vehicle.brand}</h3>
+                    <p>Year: ${vehicle.year}</p>
+                    <p>Price: ₹${vehicle.price.toLocaleString()}</p>
+                    <p>Location: ${vehicle.location}</p>
+                    <button onclick="buyVehicle('${vehicle.type} - ${vehicle.brand}')" class="bg-gradient-to-r from-[#4caf50] to-[#66bb6a] text-white px-4 py-2 rounded-lg hover:scale-105 transition-transform">Buy</button>
+                `;
+                vehicleList.appendChild(vehicleCard);
+            });
+        }
+
+        function addVehicle() {
+            const vehicleType = document.getElementById('vehicleType').value;
+            const brand = document.getElementById('brand').value;
+            const year = parseInt(document.getElementById('year').value) || 0;
+            const price = parseInt(document.getElementById('price').value) || 0;
+            const location = document.getElementById('location').value;
+            const imageInput = document.getElementById('vehicleImage');
+            const file = imageInput.files[0];
+
+            if (vehicleType && brand && year && price && location && file && year >= 1900 && year <= 2025) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageDataUrl = e.target.result;
+                    vehicles.push({
+                        type: vehicleType,
+                        brand: brand,
+                        year: year,
+                        price: price,
+                        location: location,
+                        image: imageDataUrl
+                    });
+                    displayVehicles();
+                    // Clear form
+                    document.getElementById('vehicleType').value = '';
+                    document.getElementById('brand').value = '';
+                    document.getElementById('year').value = '';
+                    document.getElementById('price').value = '';
+                    document.getElementById('location').value = '';
+                    imageInput.value = '';
+                    alert('Vehicle posted successfully!');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please fill all fields with valid data (year between 1900 and 2025) and upload an image.');
+            }
+        }
+
+        function buyVehicle(vehicleDetails) {
+            alert(`You have selected to buy ${vehicleDetails}. Please contact the seller for further details.`);
+        }
+
+        // Initial display of vehicles
+        displayVehicles();
+    </script>
+</body>
+</html>

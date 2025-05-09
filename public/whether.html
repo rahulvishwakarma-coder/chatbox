@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirshi Seva - Weather Forecast</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        header {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        nav {
+            background-color: #1b5e20;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #a5d6a7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .weather-form {
+            background: linear-gradient(135deg, #ffffff, #f1f8e9);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .weather-form input {
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .weather-form input:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        .weather-card, .forecast-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .forecast-card:nth-child(1) { animation-delay: 0.1s; }
+        .forecast-card:nth-child(2) { animation-delay: 0.2s; }
+        .forecast-card:nth-child(3) { animation-delay: 0.3s; }
+        .forecast-card:nth-child(4) { animation-delay: 0.4s; }
+        .forecast-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .weather-card:hover, .forecast-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .weather-form {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>कृषि सेवा पोर्टल - Weather Forecast</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#weather">Weather Forecast</a></li>
+            <li><a href="https://www.youtube.com/embed/0t39R7s-UUg?si=ZYExr1IRHKyB_5M0">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <section id="weather">
+            <h2 class="section-title">Weather Forecast</h2>
+            <div class="weather-form">
+                <div class="form-group">
+                    <label for="cityInput" class="block mb-2 font-semibold text-[#2e7d32]">Enter City</label>
+                    <input type="text" id="cityInput" placeholder="e.g., Narsinghpur" class="w-full p-3" required>
+                </div>
+                <button onclick="fetchWeather()" class="mt-4 bg-gradient-to-r from-[#4caf50] to-[#66bb6a] text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-transform">Get Forecast</button>
+            </div>
+            <div id="currentWeather" class="hidden mb-6"></div>
+            <div id="forecast" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 Kirshi Seva. All rights reserved.</p>
+    </footer>
+    <script>
+        const apiKey = '256ff49bb05bed9cff426dc71e497a4d';
+
+        async function fetchWeather() {
+            const city = document.getElementById('cityInput').value.trim();
+            const currentWeather = document.getElementById('currentWeather');
+            const forecast = document.getElementById('forecast');
+
+            if (!city) {
+                alert('Please enter a city name.');
+                currentWeather.classList.add('hidden');
+                forecast.innerHTML = '';
+                return;
+            }
+
+            try {
+                // Fetch current weather
+                const currentResponse = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${apiKey}`
+                );
+                if (!currentResponse.ok) {
+                    const errorData = await currentResponse.json();
+                    throw new Error(errorData.message || 'City not found');
+                }
+                const currentData = await currentResponse.json();
+
+                // Fetch 5-day forecast
+                const forecastResponse = await fetch(
+                    `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(city)}&units=metric&appid=${apiKey}`
+                );
+                if (!forecastResponse.ok) {
+                    const errorData = await forecastResponse.json();
+                    throw new Error(errorData.message || 'Forecast not available');
+                }
+                const forecastData = await forecastResponse.json();
+
+                displayCurrentWeather(currentData);
+                displayForecast(forecastData);
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+                currentWeather.classList.add('hidden');
+                forecast.innerHTML = '';
+            }
+        }
+
+        function displayCurrentWeather(data) {
+            const currentWeather = document.getElementById('currentWeather');
+            currentWeather.classList.remove('hidden');
+            const icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+            currentWeather.innerHTML = `
+                <div class="weather-card animate__animated animate__fadeIn">
+                    <h3 class="text-2xl font-semibold text-[#2e7d32]">${data.name}, ${data.sys.country}</h3>
+                    <img src="${icon}" alt="Weather Icon" class="w-20 mx-auto animate__animated animate__pulse animate__infinite">
+                    <p class="text-lg capitalize">${data.weather[0].description}</p>
+                    <p class="text-3xl font-bold">${Math.round(data.main.temp)}°C</p>
+                    <p>Feels Like: ${Math.round(data.main.feels_like)}°C</p>
+                    <p>Humidity: ${data.main.humidity}%</p>
+                    <p>Wind: ${data.wind.speed} m/s</p>
+                </div>
+            `;
+        }
+
+        function displayForecast(data) {
+            const forecast = document.getElementById('forecast');
+            forecast.innerHTML = '';
+            // Filter to get one forecast per day at 12:00
+            const dailyForecasts = data.list
+                .filter(item => item.dt_txt.includes('12:00:00'))
+                .slice(0, 5);
+            
+            if (dailyForecasts.length === 0) {
+                forecast.innerHTML = '<p class="text-center text-gray-500">No forecast data available.</p>';
+                return;
+            }
+
+            dailyForecasts.forEach(item => {
+                const date = new Date(item.dt_txt).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                const icon = `https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`;
+                forecast.innerHTML += `
+                    <div class="forecast-card animate__animated animate__fadeInUp">
+                        <h4 class="text-lg font-semibold text-[#2e7d32]">${date}</h4>
+                        <img src="${icon}" alt="Weather Icon" class="w-16 mx-auto animate__animated animate__pulse animate__infinite">
+                        <p class="capitalize">${item.weather[0].description}</p>
+                        <p class="text-xl">${Math.round(item.main.temp)}°C</p>
+                        <p>Humidity: ${item.main.humidity}%</p>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

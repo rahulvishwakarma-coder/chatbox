@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirshi Seva - Expense Calculator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Animate.css CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+
+        header {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        nav {
+            background-color: #1b5e20;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #a5d6a7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-title {
+            font-family: 'Roboto Slab', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1b5e20;
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .calculator-form {
+            background: linear-gradient(135deg, #ffffff, #f1f8e9);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideInUp 0.8s ease-out forwards;
+        }
+
+        .form-group input,
+        .form-group select {
+            border: 2px solid #a5d6a7;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #4caf50;
+            outline: none;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .result-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background: linear-gradient(to right, #2e7d32, #4caf50);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .calculator-form {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>कृषि सेवा पोर्टल - Expense Calculator</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#calculator">Expense Calculator</a></li>
+            <li><a href="https://www.youtube.com/embed/0t39R7s-UUg?si=ZYExr1IRHKyB_5M0">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <section id="calculator">
+            <h2 class="section-title">Crop Expense Calculator</h2>
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="cropName" class="block mb-2 font-semibold text-[#2e7d32]">Crop Name</label>
+                    <select id="cropName" class="w-full p-3" required>
+                        <option value="" disabled selected>Select Crop</option>
+                        <option value="Wheat">Wheat</option>
+                        <option value="Rice">Rice</option>
+                        <option value="Maize">Maize</option>
+                        <option value="Soybean">Soybean</option>
+                        <option value="Cotton">Cotton</option>
+                        <option value="Sugarcane">Sugarcane</option>
+                        <option value="Pulses">Pulses</option>
+                        <option value="Millets">Millets</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="landArea" class="block mb-2 font-semibold text-[#2e7d32]">Land Area (Acres)</label>
+                    <input type="number" id="landArea" placeholder="e.g., 5" min="0" step="0.1" class="w-full p-3" required>
+                </div>
+                <div class="form-group">
+                    <label for="seedCost" class="block mb-2 font-semibold text-[#2e7d32]">Seed Cost (INR)</label>
+                    <input type="number" id="seedCost" placeholder="e.g., 5000" min="0" class="w-full p-3" required>
+                </div>
+                <div class="form-group">
+                    <label for="fertilizerCost" class="block mb-2 font-semibold text-[#2e7d32]">Fertilizer Cost (INR)</label>
+                    <input type="number" id="fertilizerCost" placeholder="e.g., 3000" min="0" class="w-full p-3" required>
+                </div>
+                <div class="form-group">
+                    <label for="laborCost" class="block mb-2 font-semibold text-[#2e7d32]">Labor Cost (INR)</label>
+                    <input type="number" id="laborCost" placeholder="e.g., 10000" min="0" class="w-full p-3" required>
+                </div>
+                <div class="form-group">
+                    <label for="irrigationCost" class="block mb-2 font-semibold text-[#2e7d32]">Irrigation Cost (INR)</label>
+                    <input type="number" id="irrigationCost" placeholder="e.g., 2000" min="0" class="w-full p-3" required>
+                </div>
+                <div class="form-group">
+                    <label for="equipmentCost" class="block mb-2 font-semibold text-[#2e7d32]">Equipment Cost (INR)</label>
+                    <input type="number" id="equipmentCost" placeholder="e.g., 4000" min="0" class="w-full p-3" required>
+                </div>
+                <div class="form-group">
+                    <label for="miscCost" class="block mb-2 font-semibold text-[#2e7d32]">Miscellaneous Cost (INR)</label>
+                    <input type="number" id="miscCost" placeholder="e.g., 1000" min="0" class="w-full p-3" required>
+                </div>
+                <button onclick="calculateExpenses()" class="mt-4 bg-gradient-to-r from-[#4caf50] to-[#66bb6a] text-white px-6 py-3 rounded-lg font-semibold hover:scale-105 transition-transform animate__animated animate__pulse animate__infinite">Calculate</button>
+            </div>
+            <div id="result" class="hidden max-w-600 mx-auto"></div>
+        </section>
+    </div>
+    <footer>
+        <p>© 2025 Kirshi Seva. All rights reserved.</p>
+    </footer>
+    <script>
+        function calculateExpenses() {
+            const cropName = document.getElementById('cropName').value;
+            const landArea = parseFloat(document.getElementById('landArea').value) || 0;
+            const seedCost = parseFloat(document.getElementById('seedCost').value) || 0;
+            const fertilizerCost = parseFloat(document.getElementById('fertilizerCost').value) || 0;
+            const laborCost = parseFloat(document.getElementById('laborCost').value) || 0;
+            const irrigationCost = parseFloat(document.getElementById('irrigationCost').value) || 0;
+            const equipmentCost = parseFloat(document.getElementById('equipmentCost').value) || 0;
+            const miscCost = parseFloat(document.getElementById('miscCost').value) || 0;
+
+            if (!cropName || landArea <= 0) {
+                alert('Please select a crop and enter a valid land area.');
+                return;
+            }
+
+            const totalCost = seedCost + fertilizerCost + laborCost + irrigationCost + equipmentCost + miscCost;
+            const costPerAcre = landArea > 0 ? (totalCost / landArea).toFixed(2) : 0;
+
+            const result = document.getElementById('result');
+            result.classList.remove('hidden');
+            result.innerHTML = `
+                <div class="result-card animate__animated animate__fadeIn">
+                    <h3 class="text-2xl font-semibold text-[#2e7d32] mb-4">Expense Breakdown for ${cropName}</h3>
+                    <p class="text-lg">Land Area: ${landArea} Acres</p>
+                    <p class="text-lg">Seed Cost: ₹${seedCost.toFixed(2)}</p>
+                    <p class="text-lg">Fertilizer Cost: ₹${fertilizerCost.toFixed(2)}</p>
+                    <p class="text-lg">Labor Cost: ₹${laborCost.toFixed(2)}</p>
+                    <p class="text-lg">Irrigation Cost: ₹${irrigationCost.toFixed(2)}</p>
+                    <p class="text-lg">Equipment Cost: ₹${equipmentCost.toFixed(2)}</p>
+                    <p class="text-lg">Miscellaneous Cost: ₹${miscCost.toFixed(2)}</p>
+                    <hr class="my-4 border-[#a5d6a7]">
+                    <p class="text-xl font-bold text-[#2e7d32]">Total Cost: ₹${totalCost.toFixed(2)}</p>
+                    <p class="text-lg">Cost per Acre: ₹${costPerAcre}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

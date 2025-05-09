@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Krishi Seva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        :root {
+            --bg-dark: #1a1a2e;
+            --accent: #00ff88;
+            --text-light: #e0e0e0;
+            --card-bg: #16213e;
+            --shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(45deg, #0f0c29, #302b63, #24243e);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        header h1 {
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--accent), #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px var(--accent); }
+            to { text-shadow: 0 0 20px var(--accent); }
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-buttons button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 136, 0.4),
+                transparent
+            );
+            transition: left 0.5s ease;
+        }
+
+        .nav-buttons button:hover::before {
+            left: 100%;
+        }
+
+        .nav-buttons button:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .menu-toggle {
+            font-size: 1.5em;
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            display: none; /* Hidden by default for desktop */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 250px;
+            height: calc(100vh - 60px);
+            background: #0f0c29;
+            padding: 20px;
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+            z-index: 999;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar ul li a:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            transform: translateX(10px);
+        }
+
+        .sidebar ul li a i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 270px;
+            padding: 80px 20px 20px;
+            transition: margin-left 0.5s ease;
+        }
+
+        .main-content.full {
+            margin-left: 0;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: cardSlide 0.8s ease-out;
+        }
+
+        @keyframes cardSlide {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            animation: slideBorder 2s infinite;
+        }
+
+        @keyframes slideBorder {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .card h2 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        .data-table th, .data-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9em;
+        }
+
+        .data-table th {
+            background: var(--accent);
+            color: var(--bg-dark);
+        }
+
+        .data-table tr {
+            transition: var(--transition);
+        }
+
+        .data-table tr:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: scale(1.01);
+        }
+
+        .action-btn {
+            background: var(--accent);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            color: var(--bg-dark);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8em;
+        }
+
+        .action-btn:hover {
+            background: #00cc6a;
+            transform: translateY(-2px);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 15px;
+            color: var(--accent);
+            font-size: 1.2em;
+        }
+
+        .modal-content input, .modal-content textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            font-size: 0.9em;
+        }
+
+        .modal-content button {
+            background: var(--accent);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: var(--bg-dark);
+            cursor: pointer;
+            margin: 8px 5px;
+            font-size: 0.9em;
+        }
+
+        .modal-content button:hover {
+            background: #00cc6a;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.2em;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 15px;
+            }
+
+            header h1 {
+                font-size: 1.2em;
+            }
+
+            .nav-buttons button {
+                padding: 6px 10px;
+                font-size: 0.8em;
+            }
+
+            .menu-toggle {
+                display: block; /* Show menu toggle on mobile */
+            }
+
+            .sidebar {
+                width: 200px;
+                top: 60px;
+                height: calc(100vh - 60px);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 70px 10px 10px;
+            }
+
+            .main-content.full {
+                margin-left: 0;
+            }
+
+            .card {
+                padding: 10px;
+                margin: 10px 0;
+            }
+
+            .card h2 {
+                font-size: 1.1em;
+            }
+
+            .data-table th, .data-table td {
+                padding: 8px;
+                font-size: 0.8em;
+            }
+
+            .action-btn {
+                padding: 5px 10px;
+                font-size: 0.7em;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-width: 350px;
+                padding: 10px;
+            }
+
+            .modal-content h2 {
+                font-size: 1em;
+            }
+
+            .modal-content input, .modal-content textarea {
+                padding: 6px;
+                font-size: 0.8em;
+            }
+
+            .modal-content button {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1em;
+            }
+
+            .nav-buttons {
+                gap: 5px;
+            }
+
+            .nav-buttons button {
+                padding: 5px 8px;
+                font-size: 0.7em;
+            }
+
+            .sidebar {
+                width: 180px;
+            }
+
+            .sidebar ul li a {
+                font-size: 0.9em;
+                padding: 8px;
+            }
+
+            .card h2 {
+                font-size: 1em;
+            }
+
+            .data-table {
+                font-size: 0.75em;
+            }
+
+            .modal-content {
+                width: 90%;
+                max-width: 300px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .sidebar {
+                transform: translateX(0); /* Always visible on desktop */
+            }
+
+            .main-content {
+                margin-left: 270px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Krishi Seva Admin Panel</h1>
+        <div class="nav-buttons">
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+            <button onclick="openModal('addUser')">Add User</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="#users"><i>👥</i> Users</a></li>
+            <li><a href="#crops"><i>🌾</i> Crops</a></li>
+            <li><a href="#transactions"><i>💸</i> Transactions</a></li>
+            <li><a href="#reports"><i>📊</i> Reports</a></li>
+            <li><a href="#settings"><i>⚙️</i> Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="card" id="users">
+            <h2>Users Management</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable">
+                    <!-- Data will be populated via JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" id="crops">
+            <h2>Crops Management</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="cropTable">
+                    <!-- Data will be populated via JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <h2 id="modalTitle">Add User</h2>
+            <form id="modalForm">
+                <input type="text" id="name" placeholder="Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="text" id="role" placeholder="Role" required>
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample data
+        const users = [
+            { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Farmer' },
+            { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Admin' }
+        ];
+
+        const crops = [
+            { id: 1, name: 'Wheat', type: 'Grain', price: 20 },
+            { id: 2, name: 'Rice', type: 'Grain', price: 25 }
+        ];
+
+        // Populate tables
+        function populateTables() {
+            const userTable = document.getElementById('userTable');
+            const cropTable = document.getElementById('cropTable');
+
+            userTable.innerHTML = users.map(user => `
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <button class="action-btn" onclick="editUser(${user.id})">Edit</button>
+                        <button class="action-btn" onclick="deleteUser(${user.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            cropTable.innerHTML = crops.map(crop => `
+                <tr>
+                    <td>${crop.id}</td>
+                    <td>${crop.name}</td>
+                    <td>${crop.type}</td>
+                    <td>$${crop.price}</td>
+                    <td>
+                        <button class="action-btn" onclick="editCrop(${crop.id})">Edit</button>
+                        <button class="action-btn" onclick="deleteCrop(${crop.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('full');
+        }
+
+        // Modal handling
+        function openModal(type) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalForm = document.getElementById('modalForm');
+
+            if (type === 'addUser') {
+                modalTitle.textContent = 'Add User';
+                modalForm.innerHTML = `
+                    <input type="text" id="name" placeholder="Name" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="text" id="role" placeholder="Role" required>
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="closeModal()">Cancel</button>
+                `;
+            } else if (type === 'addCrop') {
+                modalTitle.textContent = 'Add Crop';
+                modalForm.innerHTML = `
+                    <input type="text" id="name" placeholder="Name" required>
+                    <input type="text" id="type" placeholder="Type" required>
+                    <input type="number" id="price" placeholder="Price" required>
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="closeModal()">Cancel</button>
+                `;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+        }
+
+        // CRUD operations (mock)
+        function editUser(id) {
+            alert(`Editing user with ID: ${id}`);
+            openModal('addUser');
+        }
+
+        function deleteUser(id) {
+            if (confirm(`Delete user with ID: ${id}?`)) {
+                // Remove user logic
+                alert(`User ${id} deleted`);
+            }
+        }
+
+        function editCrop(id) {
+            alert(`Editing crop with ID: ${id}`);
+            openModal('addCrop');
+        }
+
+        function deleteCrop(id) {
+            if (confirm(`Delete crop with ID: ${id}?`)) {
+                // Remove crop logic
+                alert(`Crop ${id} deleted`);
+            }
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logged out');
+                // Redirect to login page
+            }
+        }
+
+        // Form submission
+        document.getElementById('modalForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Data saved successfully!');
+            closeModal();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            populateTables();
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>

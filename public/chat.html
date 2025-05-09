@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer AI Chatbot</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 700px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 80vh;
+        }
+
+        .chat-header {
+            background-color: #5cb85c;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 80%;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.5s ease forwards;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #d9 دوربینd9;
+            color: #333;
+        }
+
+        .message.bot {
+            align-self: flex-start;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        @keyframes fadeInSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .input-area textarea {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+            resize: none;
+            font-size: 1em;
+        }
+
+        .input-area button {
+            padding: 10px 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .input-area button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            Farmer AI Assistant
+        </div>
+        <div class="chat-box" id="chat-box">
+            <div class="message bot">Hello! Describe your farm problem, and I'll do my best to help.</div>
+        </div>
+        <div class="input-area">
+            <textarea id="user-input" placeholder="Describe your problem..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+
+        function sendMessage() {
+            const messageText = userInput.value.trim();
+            if (messageText === '') return;
+
+            // Add user message to chat
+            addMessage(messageText, 'user');
+            userInput.value = '';
+
+            // Simulate typing indicator (optional)
+            const typingIndicator = addMessage('AI is thinking...', 'bot typing');
+
+
+            // --- Simulate API Call (Replace with actual API call) ---
+            simulateBotResponse(messageText, typingIndicator);
+            // --- End Simulation ---
+        }
+
+        function addMessage(text, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender);
+            messageElement.textContent = text;
+            chatBox.appendChild(messageElement);
+
+            // Trigger animation by adding a class after a small delay
+            setTimeout(() => {
+                messageElement.style.opacity = 1;
+                messageElement.style.transform = 'translateY(0)';
+            }, 50); // Small delay to ensure the element is in the DOM
+
+            // Scroll to the bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            return messageElement; // Return element for potential later modification (like typing indicator)
+        }
+
+        // --- Simulation Function (Replace with actual API call logic) ---
+        function simulateBotResponse(userMessage, typingIndicator) {
+            // In a real application, you would make an API call here to your backend
+            // which in turn calls the AI model.
+
+            console.log("Simulating API call with message:", userMessage);
+
+            // Simulate a delay for the AI to process
+            setTimeout(() => {
+                let botResponse = "Thank you for your message. I'm still learning about this topic. Please provide more details, or try rephrasing your question.";
+
+                // Simple keyword-based simulated responses
+                if (userMessage.toLowerCase().includes('pest')) {
+                    botResponse = "For pests, could you describe the type of pest or the damage you're seeing? Knowing the specific pest helps in recommending the right treatment.";
+                } else if (userMessage.toLowerCase().includes('soil')) {
+                    botResponse = "Soil health is crucial. Can you tell me about your soil type, recent treatments, or any issues you're observing like poor drainage?";
+                } else if (userMessage.toLowerCase().includes('weather')) {
+                     botResponse = "Weather significantly impacts farming. Are you concerned about upcoming forecasts, past weather events, or how weather is affecting your crops currently?";
+                } else if (userMessage.toLowerCase().includes('crop')) {
+                    botResponse = "Regarding your crops, what type of crop is it, and what specific problem are you facing (e.g., growth issues, disease, yield)?";
+                }
+
+
+                // Remove typing indicator
+                if (typingIndicator && typingIndicator.parentNode) {
+                     typingIndicator.textContent = botResponse; // Update text
+                     typingIndicator.classList.remove('typing'); // Remove typing class if used for styling
+                     typingIndicator.style.opacity = 1; // Ensure visibility after update
+                     typingIndicator.style.transform = 'translateY(0)';
+                } else {
+                     // If typing indicator was not used or removed differently, just add the new message
+                     addMessage(botResponse, 'bot');
+                }
+
+
+                // Scroll again after receiving response
+                 chatBox.scrollTop = chatBox.scrollHeight;
+
+
+            }, 1500); // Simulate a 1.5 second delay
+        }
+        // --- End Simulation Function ---
+
+        // Allow sending message by pressing Enter in the textarea
+        userInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent newline in textarea
+                sendMessage();
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -5,17 +5,6 @@ import { GoogleGenAI } from "@google/genai";
 const app = express();
 const ai = new GoogleGenAI({ apiKey: "AIzaSyAMTrxsrwjiWUHiEJpfoMpGO-8E_FqVU_0" });
 
-async function main() {
-  const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: "Explain how AI works in a few words",
-  });
-  console.log(response.text);
-}
-
-main();
-
-
 app.use(express.json());
 app.use(express.static('./public'));
 
