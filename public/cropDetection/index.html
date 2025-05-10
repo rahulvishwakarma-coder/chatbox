@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>file upload</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <form class="form">
+        <span class="form-title">Upload your file</span>
+        <p class="form-paragraph">
+            File should be an image
+        </p>
+        <label for="file-input" class="drop-container">
+            <span class="drop-title">Drop files here</span>
+            or
+            <input type="file" accept="image/*" required="" id="file-input">
+        </label>
+    </form>
+
+    <li class="content__item">
+        <button class="button button--pan"><span class="loading">Upload</span></button>
+    </li>
+    <h2 class="display">
+
+    </h2>
+</body>
+<script src="upload.js"></script>
+
+</html>
